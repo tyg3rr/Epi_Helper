@@ -4,7 +4,7 @@
 
 This project uses [setuptools](https://setuptools.pypa.io/en/latest/userguide) for packaging and [setuptools-scm](https://pypi.org/project/setuptools-scm/) for version management. It uses `release-branch-semver` as its version scheme and reads the most recent git tag for the base number.
 
-To test the package locally install it as an editable package `pip install --editable .` to enable local execution e.g. `python -m lhd_helper`
+To test the package locally install it as an editable package `pip install --editable .` to enable local execution e.g. `python -m epi_helper`
 
 ### Project Structure
 
