@@ -1,0 +1,117 @@
+{
+    "groups": [
+        {
+            "diseases": [
+                "AIDS, Aggregate",
+                "Novel Coronavirus COVID-19",
+                "Giardiasis",
+                "H. influenzae Disease - Inv.",
+                "Hepatitis A",
+                "Hepatitis B, Acute",
+                "Hepatitis C, Acute",
+                "Hepatitis C, Chronic",
+                "Hepatitis C, Unknown*",
+                "Legionellosis",
+                "Lyme Disease",
+                "Meningitis - Aseptic",
+                "Meningitis - Bacterial Other",
+                "Meningococcal Disease",
+                "Mumps",
+                "Pertussis",
+                "Streptococcal Dis, Inv, Grp A",
+                "Streptococcus pneumoniae, Drug Resistant",
+                "West Nile Virus"
+            ],
+            "settings": {
+                "Case Status": [
+                    "Confirmed"
+                ],
+                "Investigation Status": [
+                    "Active",
+                    "Completed",
+                    "Completed - Follow Up"
+                ]
+            }
+        },
+        {
+            "diseases": [
+                "Tuberculosis"
+            ],
+            "settings": {
+                "Case Status": [
+                    "Confirmed"
+                ],
+                "Investigation Status": [
+                    "Active",
+                    "Completed",
+                    "Completed - Follow Up",
+                    "Review"
+                ]
+            }
+        },
+        {
+            "diseases": [
+                "Chickenpox (Varicella)",
+                "Cryptococcosis",
+                "Campylobacter",
+                "Salmonellosis",
+                "Shigellosis",
+                "Shiga toxin-producing Escherichia coli (STEC)",
+                "Salmonellosis",
+                "Influenza-Like Illness"
+            ],
+            "settings": {
+                "Case Status": [
+                    "Confirmed",
+                    "Probable"
+                ],
+                "Investigation Status": [
+                    "Active",
+                    "Completed",
+                    "Completed - Follow Up"
+                ]
+            }
+        },
+        {
+            "diseases": [
+                "Syphilis - Congenital",
+                "Syphilis - Primary",
+                "Syphilis - Secondary"
+            ],
+            "settings": {
+                "Case Status": [
+                    "Confirmed",
+                    "Probable",
+                    "Suspect"
+                ],
+                "Investigation Status": [
+                    "Active",
+                    "Completed",
+                    "Completed - Follow Up",
+                    "Review"
+                ]
+            }
+        },
+        {
+            "diseases": [
+                "Chlamydia (Genital)",
+                "Gonorrhea"
+            ],
+            "settings": {
+                "Case Status": [
+                    "Confirmed",
+                    "Probable",
+                    "Suspect",
+                    "Unknown"
+                ],
+                "Investigation Status": [
+                    "Active",
+                    "Completed",
+                    "Completed - Follow Up",
+                    "New",
+                    "Review"
+                ]
+            }
+        }
+    ]
+}
