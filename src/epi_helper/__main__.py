@@ -25,5 +25,5 @@ for i in file['groups']:
         m[disease] = df[disease]
 
 
-
-m.to_csv('dataset.csv')
+n = transpose_add_YTD(m)
+n.to_csv('dataset.csv')

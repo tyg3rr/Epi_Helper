@@ -142,15 +142,19 @@ def df_cleaning_preprocessing(df):
     df.columns = df.iloc[0,:]
     df = df.iloc[1:,:]
     df = df.reset_index().set_index('Disease').T
-    df = pd.melt(df.T.reset_index().set_index(['Disease','Disease Group']).reset_index(), id_vars= ['Disease','Disease Group'], var_name='Time',value_name='Count')
+    return df
+
+
+def transpose_add_YTD(df):
+    df = df.rename_axis('Disease').reset_index().T
+    df.columns = df.iloc[0,:]
+
+    df = pd.melt(df.T.drop(columns='Disease').T.reset_index().rename(columns={'index':'Disease'}), id_vars=['Disease','Disease Group'], var_name="Time", value_name='Count')
     df['Time'] = pd.to_datetime(df['Time'])
     df['Month'] = df['Time'].apply(lambda x: x.month_name())
     df['Year'] = df['Time'].apply(lambda x: x.year)
     df['Count'] = pd.to_numeric(df['Count'])
     df['YTD'] = df.groupby(['Disease','Year'])['Count'].cumsum()
-    
-
-    
     return df
 
 
