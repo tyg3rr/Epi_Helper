@@ -1,5 +1,7 @@
 # Epi_Helper
 
+![Epi_Helper logo](image.png)
+
 Version: 0.1 (Beta)
 
 Beta Version This pipeline is currently in Beta testing and issues could appear during data processing, use at your own risk. Feedback and suggestions are welcome!
