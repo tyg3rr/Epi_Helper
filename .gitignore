@@ -165,6 +165,3 @@ cython_debug/
 # Debugging
 *.ipynb
 *.ps1
-
-# Style tools
-*.png
