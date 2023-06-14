@@ -1,8 +1,13 @@
-# Epi_Helper
+<p align="center">
+<img src = image.png />
+  </p>
 
-![Epi_Helper logo](image.png)
+<h1> 
+<p align=center>
+Epi_Helper </h>
+</p> 
 
-Version: 0.1 (Beta)
+## Version: 0.1 (Beta)
 
 Beta Version This pipeline is currently in Beta testing and issues could appear during data processing, use at your own risk. Feedback and suggestions are welcome!
 
