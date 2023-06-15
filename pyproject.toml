@@ -11,7 +11,7 @@ description = "TODO: Add stuff here"
 readme = "README.rst"
 requires-python = ">=3.9"
 keywords = ["one", "two"]
-license = {text = "Apache 2.0"}
+license = {file = "LICENSE"}
 classifiers = [
     "Intended Audience :: Data Scientists",
     "Natural Language :: English",
@@ -25,6 +25,10 @@ dependencies = [
     "pandas"
 ]
 dynamic = ["version"]
+
+[project.urls]
+"Homepage"="https://github.com/tyg3rr/Epi_Helper"
+"Issue Tracker"="https://github.com/tyg3rr/Epi_Helper/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
