@@ -1,0 +1,43 @@
+---
+name: Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  # This job is a workaround for global variables
+  # See https://github.com/actions/runner/issues/480
+  params:
+    uses: tyg3rr/Epi_Helper/.github/workflows/params.yaml@main
+    with:
+      name: epi_helper
+      # Optional
+      system_list: "ubuntu windows msys2 macos"
+      python_version: "3.11"
+      python_version_list: "3.9 3.10 3.11"
+
+  package:
+    uses: tyg3rr/Epi_Helper/.github/workflows/python-package.yaml@main
+    needs:
+      - params
+    with:
+      artifact: ${{ fromJson(needs.params.outputs.params).artifacts.package }}
+      # Optional
+      python_version: ${{ fromJson(needs.params.outputs.params).python_version }}
+      requirements: 'wheel'
+
+  publishOnPyPI:
+    uses: tyg3rr/Epi_Helper/.github/workflows/publish-pypi.yaml@main
+    if: startsWith(github.ref, 'refs/tags')
+    needs:
+      - params
+      # - release
+      - package
+    with:
+      artifact: ${{ fromJson(needs.params.outputs.params).artifacts.package }}
+      # Optional
+      python_version: ${{ fromJson(needs.params.outputs.params).python_version }}
+      requirements: 'wheel twine'
+    secrets:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
