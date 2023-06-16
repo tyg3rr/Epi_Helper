@@ -34,6 +34,8 @@ jobs:
       - params
       # - release
       - package
+    permissions:
+      id-token: write
     with:
       artifact: ${{ fromJson(needs.params.outputs.params).artifacts.package }}
       # Optional
