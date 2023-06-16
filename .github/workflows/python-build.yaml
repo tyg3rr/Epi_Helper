@@ -14,7 +14,6 @@ env:
 jobs:
   build:
 
-    runs-on: ${{matrix.os}}
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11"]
@@ -27,7 +26,7 @@ jobs:
         #   path: ~/Library/Caches/pip
         # - os: windows-latest
         #   path: ~\AppData\Local\pip\Cache
-
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
