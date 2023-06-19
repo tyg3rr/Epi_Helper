@@ -93,11 +93,11 @@ jobs:
 
       - name: 🔨 [setuptools] Build Python package (source distribution)
         if: inputs.requirements != '' && inputs.requirements != 'no-isolation'
-        run: python setup.py sdist
+        run: python -m build --sdist
 
       - name: 🔨 [setuptools] Build Python package (binary distribution - wheel)
         if: inputs.requirements != '' && inputs.requirements != 'no-isolation'
-        run: python setup.py bdist_wheel
+        run: python -m build --wheel
 
       - name: Verify Packaging
         run: |
