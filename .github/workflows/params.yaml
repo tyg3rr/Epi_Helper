@@ -32,7 +32,7 @@ on:
 
 jobs:
 
-  Parameters:
+  params:
     runs-on: ubuntu-latest
     outputs:
       params: ${{ steps.params.outputs.params }}
@@ -66,8 +66,6 @@ jobs:
           versions = '${{ inputs.python_version_list }}'.split(' ')
           if '3.6' in versions:
               print("::warning title=Deprecated::Support for Python 3.6 ended in 2021.12.23.")
-          if '3.11' in versions:
-              print(f"::notice title=Experimental::Python 3.11 (3.11.0-alpha3) is a pre-release.")
           data = {
               'python': {
                   '3.6':  { 'icon': '⚫', 'until': '2021.12.23' },
