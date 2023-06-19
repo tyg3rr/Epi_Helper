@@ -55,6 +55,7 @@ path = "src"
 exclude = [
     # No need to traverse our git directory
     ".git",
+    ".github",
     # Also avoid the venv
     ".venv",
     # There's no value in checking cache directories
