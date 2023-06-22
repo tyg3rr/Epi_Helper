@@ -168,7 +168,7 @@ cython_debug/
 # Debugging
 *.ipynb
 *.ps1
-niceguy.py
+niceguyy.py
 
 # Dev (maybe temporary)
 .pre-commit-config.yaml
