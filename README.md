@@ -52,3 +52,7 @@ This repository is not a source of government records, but is a copy to increase
 
 - The project expects a `config.json` file in the working directory.
 - This project relies on tkinter and is only tested on Windows.
+
+## Acknowledgements 
+
+Special thanks to [@H3MMY](https://github.com/h3mmy) for their highly specialized assistance with the packaging of Epi_Helper

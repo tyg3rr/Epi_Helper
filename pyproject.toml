@@ -8,10 +8,10 @@ authors = [
     {name="Lillian Jensen", email="tyg3r@users.noreply.github.com"}
 ]
 description = "TODO: Add stuff here"
-readme = "README.rst"
+readme = "README.md"
 requires-python = ">=3.9"
 keywords = ["one", "two"]
-license = {text = "Apache 2.0"}
+license = {file = "LICENSE"}
 classifiers = [
     "Intended Audience :: Data Scientists",
     "Natural Language :: English",
@@ -25,6 +25,10 @@ dependencies = [
     "pandas"
 ]
 dynamic = ["version"]
+
+[project.urls]
+"Homepage"="https://github.com/tyg3rr/Epi_Helper"
+"Issue Tracker"="https://github.com/tyg3rr/Epi_Helper/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -51,6 +55,7 @@ path = "src"
 exclude = [
     # No need to traverse our git directory
     ".git",
+    ".github",
     # Also avoid the venv
     ".venv",
     # There's no value in checking cache directories

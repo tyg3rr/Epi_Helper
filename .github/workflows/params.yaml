@@ -1,0 +1,100 @@
+name: params
+
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        description: 'Python version.'
+        required: false
+        default: '3.11'
+        type: string
+      python_version_list:
+        description: 'Space separated list of Python versions to run tests with.'
+        required: false
+        default: '3.9 3.10 3.11'
+        type: string
+      system_list:
+        description: 'Space separated list of systems to run tests on.'
+        required: false
+        default: 'ubuntu windows msys2 macos'
+        type: string
+      name:
+        description: 'Name of the app'
+        required: true
+        type: string
+    outputs:
+      params:
+        description: "parameters to be used in other jobs."
+        value: ${{ jobs.params.outputs.params }}
+      python_jobs:
+        description: "List of Python versions to be used in the matrix of other jobs."
+        value: ${{ jobs.params.outputs.python_jobs }}
+
+jobs:
+
+  params:
+    runs-on: ubuntu-latest
+    outputs:
+      params: ${{ steps.params.outputs.params }}
+      python_jobs: ${{ steps.params.outputs.python_jobs }}
+    steps:
+
+      - name: Generate 'params' and 'python_jobs'
+        id: params
+        shell: python
+        run: |
+          from os import environ
+
+          name = '${{ inputs.name }}'
+          params = {
+            'python_version': '${{ inputs.python_version }}',
+            'artifacts': {
+              'unittesting': f'{name}-TestReport',
+              'coverage': f'{name}-coverage',
+              'typing': f'{name}-typing',
+              'package': f'{name}-package',
+              'doc': f'{name}-doc',
+            }
+          }
+
+          with open(environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as gho:
+              gho.write(f"params={params!s}\n")
+          print("Parameters:")
+          print(params)
+
+          systems = '${{ inputs.system_list }}'.split(' ')
+          versions = '${{ inputs.python_version_list }}'.split(' ')
+          if '3.6' in versions:
+              print("::warning title=Deprecated::Support for Python 3.6 ended in 2021.12.23.")
+          data = {
+              'python': {
+                  '3.6':  { 'icon': '⚫', 'until': '2021.12.23' },
+                  '3.7':  { 'icon': '🔴', 'until': '2023.06.27' },
+                  '3.8':  { 'icon': '🟠', 'until': '2024.10' },
+                  '3.9':  { 'icon': '🟡', 'until': '2025.10' },
+                  '3.10': { 'icon': '🟢', 'until': '2026.10' },
+                  '3.11': { 'icon': '🟣', 'until': '2027.10' },
+              },
+              'sys': {
+                  'ubuntu':  { 'icon': '🐧', 'runs-on': 'ubuntu-latest',  'shell': 'bash' },
+                  'windows': { 'icon': '🧊', 'runs-on': 'windows-latest', 'shell': 'pwsh' },
+                  'msys2':   { 'icon': '🟦', 'runs-on': 'windows-latest', 'shell': 'msys2 {0}' },
+                  'macos':   { 'icon': '🍎', 'runs-on': 'macos-latest',   'shell': 'bash' }
+              }
+          }
+          jobs = [
+              {
+                  'sysicon': data['sys'][system]['icon'],
+                  'system': system,
+                  'runs-on': data['sys'][system]['runs-on'],
+                  'shell': data['sys'][system]['shell'],
+                  'pyicon': data['python'][version]['icon'],
+                  'python': version
+              }
+              for system in systems
+              for version in (versions if system != 'msys2' else ['3.11'])
+          ]
+          with open(environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as gho:
+              gho.write(f"python_jobs={jobs!s}\n")
+          print("Python jobs:")
+          print(jobs)
