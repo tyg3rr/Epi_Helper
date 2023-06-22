@@ -26,4 +26,9 @@ for i in file['groups']:
 
 
 n = transpose_add_YTD(m)
-n.to_csv('dataset.csv')
+k = n.set_index(['Disease'])
+k = k.loc[k['Time'] < datetime.fromisoformat(datetime.today().isoformat()[:7] + '-01')]
+k.reset_index(inplace=True)
+k.set_index(['Disease','Month'], inplace=True)
+k['Month Median'] = k.groupby(['Disease','Month'])['Count'].median().reset_index().set_index(['Disease','Month'])['Count']
+k.to_csv('test.csv')

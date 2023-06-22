@@ -332,6 +332,7 @@ Disease_options = [
     'Lyme Disease',
     'Novel Coronavirus COVID-19',
     'Streptococcus pneumoniae, Drug Resistant',
+    "Streptococcus pneumoniae, Inv",
     'Hepatitis A',
     'AIDS, Aggregate',
     'Hepatitis B, Acute',
