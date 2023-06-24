@@ -41,6 +41,6 @@ jobs:
       # Optional
       python_version: ${{ fromJson(needs.params.outputs.params).python_version }}
       requirements: 'wheel twine'
-      environment: test-pypi
+      environment: 'test-pypi'
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
