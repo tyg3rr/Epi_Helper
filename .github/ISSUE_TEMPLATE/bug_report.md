@@ -1,4 +1,3 @@
----
 name: Bug report
 about: Create a report to help us improve
 title: ''
@@ -45,7 +44,6 @@ assignees: ''
 #       options:
 #         - label: I agree to follow this project's Code of Conduct
 #           required: true
----
 
 
 **Anything else you would like to add:**
