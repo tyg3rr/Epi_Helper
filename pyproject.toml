@@ -44,6 +44,7 @@ my-script = "epi_helper:main"
 [tool.setuptools_scm]
 # write_to = "src/epi_helper/_version.py"
 version_scheme="release-branch-semver"
+local_scheme="no-local-version"
 
 [tool.setuptools.dynamic]
 # version = {attr = "epi_helper.VERSION"}
