@@ -45,7 +45,7 @@ jobs:
       # - name: 🐍 Setup Python ${{ inputs.python_version }}
       #   uses: actions/setup-python@v4
       #   with:
-      #     python-version: ${{ inputs.python_version }}
+      #     python_version: ${{ inputs.python_version }}
 
       # - name: ⚙ Install dependencies for packaging and release
       #   run: |
