@@ -104,7 +104,7 @@ jobs:
           twine check --strict dist/*
 
       - name: Upload artifacts
-        if: startsWith(runner.os, 'ubuntu-latest')
+        if: startsWith(runner.os, 'ubuntu')
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.PKG_NAME }}-${{ runner.os }}-${{ inputs.python-version }}
