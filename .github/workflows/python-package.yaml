@@ -107,7 +107,7 @@ jobs:
         if: startsWith(runner.os, 'Linux')
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.PKG_NAME }}-${{ inputs.python-version }}
+          name: ${{ env.PKG_NAME }}-package-${{ inputs.python-version }}
           path: dist/*
           if-no-files-found: error
           retention-days: 5
