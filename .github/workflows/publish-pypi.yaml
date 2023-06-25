@@ -4,7 +4,7 @@ name: Publish to TestPyPI
 on:
   workflow_call:
     inputs:
-      python_version:
+      python-version:
         description: 'Python version.'
         required: false
         default: '3.11'
@@ -42,10 +42,10 @@ jobs:
           name: ${{ inputs.artifact }}
           path: dist/
 
-      # - name: 🐍 Setup Python ${{ inputs.python_version }}
+      # - name: 🐍 Setup Python ${{ inputs.python-version }}
       #   uses: actions/setup-python@v4
       #   with:
-      #     python_version: ${{ inputs.python_version }}
+      #     python-version: ${{ inputs.python-version }}
 
       # - name: ⚙ Install dependencies for packaging and release
       #   run: |

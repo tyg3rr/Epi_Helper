@@ -3,12 +3,12 @@ name: params
 on:
   workflow_call:
     inputs:
-      python_version:
+      python-version:
         description: 'Python version.'
         required: false
         default: '3.11'
         type: string
-      python_version_list:
+      python-version_list:
         description: 'Space separated list of Python versions to run tests with.'
         required: false
         default: '3.9 3.10 3.11'
@@ -47,7 +47,7 @@ jobs:
 
           name = '${{ inputs.name }}'
           params = {
-            'python_version': '${{ inputs.python_version }}',
+            'python-version': '${{ inputs.python-version }}',
             'artifacts': {
               'unittesting': f'{name}-TestReport',
               'coverage': f'{name}-coverage',
@@ -63,7 +63,7 @@ jobs:
           print(params)
 
           systems = '${{ inputs.system_list }}'.split(' ')
-          versions = '${{ inputs.python_version_list }}'.split(' ')
+          versions = '${{ inputs.python-version_list }}'.split(' ')
           if '3.6' in versions:
               print("::warning title=Deprecated::Support for Python 3.6 ended in 2021.12.23.")
           data = {

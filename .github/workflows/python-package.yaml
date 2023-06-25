@@ -3,7 +3,7 @@ name: Python package
 on:
   workflow_call:
     inputs:
-      python_version:
+      python-version:
         description: 'Python version.'
         required: false
         default: '3.10'
@@ -46,10 +46,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Set up Python ${{ inputs.python_version }}
+      - name: Set up Python ${{ inputs.python-version }}
         uses: actions/setup-python@v4
         with:
-          python_version: ${{ inputs.python_version }}
+          python-version: ${{ inputs.python-version }}
           cache: pip
       - name: Install dependencies
         run: |
@@ -107,7 +107,7 @@ jobs:
         if: startsWith(runner.os, 'ubuntu-latest')
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.PKG_NAME }}-${{ runner.os }}-${{ inputs.python_version }}
+          name: ${{ env.PKG_NAME }}-${{ runner.os }}-${{ inputs.python-version }}
           path: dist/*
           if-no-files-found: error
           retention-days: 5

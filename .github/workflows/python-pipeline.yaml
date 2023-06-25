@@ -14,8 +14,8 @@ jobs:
       name: epi_helper
       # Optional
       system_list: "ubuntu windows msys2 macos"
-      python_version: "3.11"
-      python_version_list: "3.9 3.10 3.11"
+      python-version: "3.11"
+      python-version_list: "3.9 3.10 3.11"
 
   package:
     uses: tyg3rr/Epi_Helper/.github/workflows/python-package.yaml@main
@@ -24,7 +24,7 @@ jobs:
     with:
       artifact: ${{ fromJson(needs.params.outputs.params).artifacts.package }}
       # Optional
-      python_version: ${{ fromJson(needs.params.outputs.params).python_version }}
+      python-version: ${{ fromJson(needs.params.outputs.params).python-version }}
       requirements: 'wheel'
 
   publishOnPyPI:
@@ -39,7 +39,7 @@ jobs:
     with:
       artifact: ${{ fromJson(needs.params.outputs.params).artifacts.package }}
       # Optional
-      python_version: ${{ fromJson(needs.params.outputs.params).python_version }}
+      python-version: ${{ fromJson(needs.params.outputs.params).python-version }}
       requirements: 'wheel twine'
       environment: 'test-pypi'
     secrets:
