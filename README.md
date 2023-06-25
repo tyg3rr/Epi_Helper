@@ -9,7 +9,7 @@ Epi_Helper </h>
 
 ## Version: 0.1 (Beta)
 
-Beta Version This pipeline is currently in Beta testing and issues could appear during data processing, use at your own risk. Feedback and suggestions are welcome!
+Beta Version This pipeline is currently in Alpha testing and issues could appear during data processing, use at your own risk. Feedback and suggestions are welcome!
 
 ## Overview
 

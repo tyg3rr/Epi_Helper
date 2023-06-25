@@ -54,7 +54,7 @@ jobs:
 
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-        if: inputs.environment == test-pypi
+        if: inputs.environment == 'test-pypi'
         with:
           # Update to dynamic based on environment
           repository-url: https://test.pypi.org/legacy/
@@ -63,7 +63,7 @@ jobs:
 
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-        if: inputs.environment == release-pypi
+        if: inputs.environment == 'release-pypi'
 
       - name: 🗑️ Delete packaging Artifacts
         uses: geekyeggo/delete-artifact@v1
