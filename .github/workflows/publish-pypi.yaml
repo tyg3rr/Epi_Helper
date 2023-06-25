@@ -57,7 +57,7 @@ jobs:
         if: inputs.environment == 'test-pypi'
         with:
           # Update to dynamic based on environment
-          repository-url: https://test.pypi.org/legacy/
+          repository_url: https://test.pypi.org/legacy/
           # user: __token__
           # password: ${{ secrets.PYPI_TOKEN }}
 
