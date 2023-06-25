@@ -13,7 +13,7 @@ requires-python = ">=3.9"
 keywords = ["one", "two"]
 license = {file = "LICENSE"}
 classifiers = [
-    "Intended Audience :: Data Scientists",
+    "Intended Audience :: Science/Research",
     "Natural Language :: English",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
