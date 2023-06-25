@@ -3,6 +3,15 @@ name: Pipeline
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "src/*"
+      - "pyproject.toml"
+  release:
+    types:
+      - published
 
 jobs:
 
@@ -27,9 +36,26 @@ jobs:
       python-version: ${{ fromJson(needs.params.outputs.params).python-version }}
       requirements: 'wheel'
 
+  publishOnTestPyPI:
+    uses: tyg3rr/Epi_Helper/.github/workflows/publish-pypi.yaml@main
+    needs:
+      - params
+      - package
+    permissions:
+      id-token: write
+    with:
+      artifact: ${{ fromJson(needs.params.outputs.params).artifacts.package }}
+      # Optional
+      python-version: ${{ fromJson(needs.params.outputs.params).python-version }}
+      requirements: 'wheel twine'
+      environment: 'test-pypi'
+    secrets:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
+
   publishOnPyPI:
     uses: tyg3rr/Epi_Helper/.github/workflows/publish-pypi.yaml@main
-#     if: startsWith(github.ref, 'refs/tags')
+    if: startsWith(github.ref, 'refs/tags')
     needs:
       - params
       # - release
@@ -41,6 +67,6 @@ jobs:
       # Optional
       python-version: ${{ fromJson(needs.params.outputs.params).python-version }}
       requirements: 'wheel twine'
-      environment: 'test-pypi'
+      environment: 'release-pypi'
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
