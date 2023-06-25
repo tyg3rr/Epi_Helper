@@ -10,7 +10,7 @@ authors = [
 description = "TODO: Add stuff here"
 readme = "README.md"
 requires-python = ">=3.9"
-keywords = ["one", "two"]
+keywords = ["data-science", "mdss", "epidemiology"]
 license = {file = "LICENSE"}
 classifiers = [
     "Intended Audience :: Science/Research",
