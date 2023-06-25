@@ -12,7 +12,6 @@
                 "Hepatitis C, Chronic",
                 "Hepatitis C, Unknown*",
                 "Legionellosis",
-                "Lyme Disease",
                 "Meningitis - Aseptic",
                 "Meningitis - Bacterial Other",
                 "Meningococcal Disease",
@@ -21,7 +20,8 @@
                 "Streptococcal Dis, Inv, Grp A",
                 "Streptococcus pneumoniae, Drug Resistant",
                 "Streptococcus pneumoniae, Inv",
-                "West Nile Virus"
+                "West Nile Virus",
+                "Lyme Disease"
             ],
             "settings": {
                 "Case Status": [

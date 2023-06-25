@@ -43,7 +43,6 @@ def find_settings(df, categories = ['Case Status','Investigation Status']):
             ])
     return settings
 
-
 def get_past_measures_diseases(list):
     """takes a list of disease names (df.columns) and returns all which follow the
     "name (Pre-year)" format
@@ -53,7 +52,6 @@ def get_past_measures_diseases(list):
         if "-2" in i:
             output.append(i)
     return output
-
 
 def yeet_old_measures_diseases(list, y=5):
     """
@@ -69,7 +67,6 @@ def yeet_old_measures_diseases(list, y=5):
         y -= 1
     return keepsies
 
-
 def yeet_year_from_name(list):
     """
     takes a list of measurement-year inclusive names
@@ -80,40 +77,21 @@ def yeet_year_from_name(list):
         corrected.append(name[: (name.rfind("-2") - 5)])
     return corrected
 
-
-def to_bool(str):
-    """
-    takes a user-input y/n string and converts to boolean T/F
-    """
-    if str in ["T", "t", "Y", "y"]:
-        return True
-    elif str in ["F", "f", "N", "n"]:
-        return False
-    else:
-        return "Not a boolean. Try again."
-
-def to_raw(string):
-    return fr"{string}"
-
-
-def df_cleaning_preprocessing(df):
-    """
-    Intakes raw MDSS-generated csv
-    Cleans, preprocesses, and shapes data
-    Returns cleaned dataframe
-    """
-
-    df = df.iloc[9:,:]
+def drop_dates_after_today(df):
+    df = df.set_index(['Disease','Disease Group']).T.reset_index()
+    df.iloc[:,0] = pd.to_datetime(df.iloc[:,0], format='%b-%Y')
+    df = df.loc[df.iloc[:,0] < datetime.today(),:].T
     df.columns = df.iloc[0,:]
-    df = df.iloc[1:,:].set_index('Disease')
-    df.reset_index(inplace=True)
-    for a in ['Total','Subtotal']:
-        df = df.drop(df[df['Disease']==a].index)
-    df = df.drop(columns='Total')
-    df = df.drop(df[df['Jan-2019'] == 'Jan-2019'].index)
-    df = df.set_index(['Disease','Disease Group']).apply(pd.to_numeric, errors='ignore')
-    df = df.reset_index().set_index('Disease')
-    df = df.T
+    return df.iloc[1:,:]
+
+def disease_name_handler(df):
+    """
+    Manages MDSS disease name changes over time due to changes in case-definition
+    Converts all "Disease (pre-'year')" formats to "Disease"
+    Note: STEC name changes do not follow the above pattern, so this function manually corrects each name-version of STEC 
+    MDSS does not seem to have a gold-standard for disease renaming, so this function is likely to fail in the future as other diseases are renamed
+
+    """
     past_measures = get_past_measures_diseases(df.columns)
     current_past_measures = yeet_old_measures_diseases(past_measures)
     df.drop(columns = [m for m in past_measures if m not in current_past_measures], inplace=True)
@@ -135,17 +113,70 @@ def df_cleaning_preprocessing(df):
     b = {}
     for col in df.columns:
         b[col] = col.strip('_')
-    df = df.rename(columns=b).T.reset_index()
-    df = df.set_index(['Disease','Disease Group']).T.reset_index()
-    df.iloc[:,0] = pd.to_datetime(df.iloc[:,0], format='%b-%Y')
-    df = df.loc[df.iloc[:,0] < datetime.today(),:].T
+    return df.rename(columns=b).T.reset_index()
+
+def data_to_numeric(df):    
+    return df.set_index(['Disease','Disease Group']).apply(pd.to_numeric, errors='ignore').reset_index().set_index('Disease')
+    
+def drop_redundant_rows(df):
+    """
+    MDSS reports contain repeating "column-header" rows
+    These redundant rows are just dates instead of disease counts
+    This function removes the redundant rows
+    """
+    arbitrary_date = 'Jan-'+str(datetime.today().year - 1)
+    return df.drop(df[df[arbitrary_date] == arbitrary_date].index)
+
+def drop_aggregate_data(df):
+    for a in ['Total','Subtotal']:
+        df = df.drop(df[df['Disease']==a].index)
+    return df.drop(columns='Total')
+
+def trim_metadata(df):
+    df = df.iloc[9:,:]
     df.columns = df.iloc[0,:]
-    df = df.iloc[1:,:]
+    df = df.iloc[1:,:].set_index('Disease')
+    df.reset_index(inplace=True)
+    return df
+
+def to_bool(str):
+    """
+    takes a user-input y/n string and converts to boolean T/F
+    """
+    if str in ["T", "t", "Y", "y"]:
+        return True
+    elif str in ["F", "f", "N", "n"]:
+        return False
+    else:
+        return "Not a boolean. Try again."
+
+def to_raw(string):
+    return fr"{string}"
+
+def df_cleaning_preprocessing(df):
+    """
+    Intakes raw MDSS-generated csv
+    Cleans, preprocesses, and shapes data
+    Returns cleaned dataframe
+    This function is the meat&potatoes of the data preprocessing
+    """
+    
+    df = trim_metadata(df)
+    df = drop_aggregate_data(df)
+    df = drop_redundant_rows(df)
+    df = data_to_numeric(df)
+    df = df.T 
+    df = disease_name_handler(df)
+    df = drop_dates_after_today(df)
+    
     df = df.reset_index().set_index('Disease').T
     return df
 
-
 def transpose_add_YTD(df):
+    """
+    Melts the dataframe into the long format that Power BI likes
+    Calculates and appends YTD information
+    """
     df = df.rename_axis('Disease').reset_index().T
     df.columns = df.iloc[0,:]
 
@@ -156,8 +187,6 @@ def transpose_add_YTD(df):
     df['Count'] = pd.to_numeric(df['Count'])
     df['YTD'] = df.groupby(['Disease','Year'])['Count'].cumsum()
     return df
-
-
 
 class MDSS_DiseaseGroup:
     """
@@ -236,14 +265,12 @@ class MDSS_DiseaseGroup:
     def get_data(self):
         self.dataset = df_cleaning_preprocessing(pd.read_csv(input('Paste filename: ')))[self.diseases]
 
-
 def prompt_user_for_path(M_DGroup):
     """
     Intakes an MDSS_DiseaseGroup instance 
     Directs user to request the correct MDSS report based on Disease Group settings
     Requests filepath for MDSS report
     Cleans and preprocesses data from MDSS report
-    Appends data to output file
     """
     print("For the disease group with the following settings: ")
     print('')
@@ -276,15 +303,15 @@ def prompt_user_for_path(M_DGroup):
         df = pd.read_csv(to_raw(file).strip('"'))
     
         if str(find_settings(df)) != str(M_DGroup.get_settings()):
-            print("Your report doesn't match the correct settings. Please try again")   
+            print("ಠ_ಠ  Your report doesn't match the correct settings. Please try again")   
         else:
-            print("Nice!")
+            print('')
+            print("Nice!  °˖✧◝(⁰▿⁰)◜✧˖°  ")
             print('')
             print('___________________________________________________________________')
             check = True
     df = df_cleaning_preprocessing(df)
     return(df)
-
 
 def option_gui(main, options):
     """
@@ -314,47 +341,6 @@ def option_gui(main, options):
 
     return main
 
-
-Investigation_options = SETTING_OPTIONS['Investigation Status']
-Case_options = SETTING_OPTIONS['Case Status']
-
-Disease_options = [
-
-    'Giardiasis',
-    'Hepatitis C, Acute',
-    'Hepatitis C, Chronic',
-    'Meningococcal Disease',
-    'West Nile Virus',
-    'Meningitis - Bacterial Other',
-    'Pertussis',
-    'Legionellosis',
-    'Mumps',
-    'Lyme Disease',
-    'Novel Coronavirus COVID-19',
-    'Streptococcus pneumoniae, Drug Resistant',
-    "Streptococcus pneumoniae, Inv",
-    'Hepatitis A',
-    'AIDS, Aggregate',
-    'Hepatitis B, Acute',
-    'H. influenzae Disease - Inv.',
-    'Meningitis - Aseptic',
-    'Streptococcal Dis, Inv, Grp A',
-    'Hepatitis C, Unknown*',
-    'Tuberculosis',
-    'Campylobacter',
-    'Chickenpox (Varicella)',
-    'Cryptococcosis',
-    'Influenza-Like Illness',
-    'Salmonellosis',
-    'Shiga toxin-producing Escherichia coli (STEC)',
-    'Shigellosis',
-    'Syphilis - Secondary',
-    'Syphilis - Congenital',
-    'Syphilis - Primary',
-    'Gonorrhea',
-    'Chlamydia (Genital)'
-]
-    
 def check_config():
     """
     Runs through config file to check for any neccesary changes
@@ -399,4 +385,46 @@ def check_config():
     f = open('config.json','w')
     json.dump(json.loads(json.dumps(file)), f, indent=4)
     f.close()
+
+
+Investigation_options = SETTING_OPTIONS['Investigation Status']
+Case_options = SETTING_OPTIONS['Case Status']
+
+Disease_options = [
+
+    'Giardiasis',
+    'Hepatitis C, Acute',
+    'Hepatitis C, Chronic',
+    'Meningococcal Disease',
+    'West Nile Virus',
+    'Meningitis - Bacterial Other',
+    'Pertussis',
+    'Legionellosis',
+    'Mumps',
+    'Lyme Disease',
+    'Novel Coronavirus COVID-19',
+    'Streptococcus pneumoniae, Drug Resistant',
+    "Streptococcus pneumoniae, Inv",
+    'Hepatitis A',
+    'AIDS, Aggregate',
+    'Hepatitis B, Acute',
+    'H. influenzae Disease - Inv.',
+    'Meningitis - Aseptic',
+    'Streptococcal Dis, Inv, Grp A',
+    'Hepatitis C, Unknown*',
+    'Tuberculosis',
+    'Campylobacter',
+    'Chickenpox (Varicella)',
+    'Cryptococcosis',
+    'Influenza-Like Illness',
+    'Salmonellosis',
+    'Shiga toxin-producing Escherichia coli (STEC)',
+    'Shigellosis',
+    'Syphilis - Secondary',
+    'Syphilis - Congenital',
+    'Syphilis - Primary',
+    'Gonorrhea',
+    'Chlamydia (Genital)'
+]
+    
     
