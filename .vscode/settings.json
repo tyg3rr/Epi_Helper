@@ -1,6 +1,11 @@
 {
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
     },
-    "python.formatting.provider": "none"
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true
 }

@@ -49,24 +49,61 @@ version_scheme="release-branch-semver"
 # version = {attr = "epi_helper.VERSION"}
 readme = {file = "README.md"}
 
-[tool.flake8]
-ignore = ["E231"]
-path = "src"
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+fix = true
+unfixable = []
+
+select = [
+  # pyflakes
+  "F",
+  # pycodestyle
+  "E", "W",
+  # flake8-2020
+  "YTT",
+  # flake8-bugbear
+  "B",
+  # flake8-quotes
+  "Q",
+  # flake8-debugger
+  "T10",
+  # flake8-gettext
+  "INT",
+  # pylint
+  "PLC", "PLE", "PLR", "PLW",
+  # misc lints
+  "PIE",
+  # flake8-pyi
+  "PYI",
+  # tidy imports
+  "TID",
+  # implicit string concatenation
+  "ISC",
+  # type-checking imports
+  "TCH",
+  # comprehensions
+  "C4",
+  # pygrep-hooks
+  "PGH",
+  # Ruff-specific rules
+  "RUF",
+]
+
+ignore = []
+
 exclude = [
-    # No need to traverse our git directory
-    ".git",
-    ".github",
-    # Also avoid the venv
-    ".venv",
-    # There's no value in checking cache directories
-    "__pycache__",
-    # This contains our build things
-    "build",
-    # Why?
-    "dist"
+  "doc/sphinxext/*.py",
+  "doc/build/*.py",
+  "doc/temp/*.py",
+  ".eggs/*.py",
+  # vendored files
+  "pandas/util/version/*",
+  "versioneer.py",
+  # exclude asv benchmark environments from linting
+  "env",
 ]
-per-file-ignores = [
-    '__init__.py:F401',
-]
-max-line-length = 140
-count = true
+
+[tool.ruff.per-file-ignores]
+# relative imports allowed for asv_bench
+"asv_bench/*" = ["TID"]
