@@ -80,3 +80,17 @@
   color: "ee0000"
   description: >-
     Denotes a PR that changes 1000+ lines, ignoring generated files.
+
+# Area
+- name: area/ci
+  color: "72ccf3"
+  description: >-
+    Changes made in the .github directory
+- name: area/python
+  color: "72ccf3"
+  description: >-
+    Changes made that impact python code
+- name: area/vscode
+  color: "72ccf3"
+  description: >-
+    Changes made in the .vscode directory

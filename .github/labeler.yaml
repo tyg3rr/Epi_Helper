@@ -1,0 +1,8 @@
+---
+area/ci:
+  - ".github/**/*"
+area/python:
+  - "src/**/*"
+  - "pyproject.toml"
+area/vscode:
+  - ".vscode/*"
