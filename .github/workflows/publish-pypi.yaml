@@ -39,7 +39,7 @@ jobs:
       - name: 📥 Download artifacts '${{ inputs.artifact }}' from 'Package' job
         uses: actions/download-artifact@v3
         with:
-          name: ${{ inputs.artifact }}
+          name: ${{ inputs.artifact }}-${{ inputs.python-version }}
           path: dist/
 
       # - name: 🐍 Setup Python ${{ inputs.python-version }}
@@ -68,4 +68,4 @@ jobs:
       - name: 🗑️ Delete packaging Artifacts
         uses: geekyeggo/delete-artifact@v1
         with:
-          name: ${{ inputs.artifact }}
+          name: ${{ inputs.artifact }}-${{ inputs.python-version }}
