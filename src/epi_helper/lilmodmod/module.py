@@ -385,35 +385,36 @@ def prompt_user_for_path(M_DGroup):
         if str(find_settings(df)) != str(M_DGroup.get_settings()):
             print("Your report doesn't match the correct settings. Please try again")
         else:
+            print("-" * 60)
             print("")
             print("Nice!")
             print("")
-            print("___________________________________________________________________")
+            print("-" * 60)
             check = True
     df = df_cleaning_preprocessing(df)
     return df
 
 
-def option_gui(main, options):
+def option_gui(m: list, options: list) -> list:
     """
     Starter user-interface tkinter GUI
     """
     root = Tk()
-    root.geometry("750x800")
+    root.geometry("300x500")
     clicked = StringVar()
     clicked.set(options[0])
-    Label(root, text="DISEASES").pack()
-    label = Label(root, text=[str(a) + "\n" for a in main])
+    Label(root, text="OPTIONS").pack()
+    label = Label(root, text="".join([a + "\n" for a in m]))
     label.pack()
     OptionMenu(root, clicked, *options).pack()
 
     def add():
-        main.append(clicked.get())
-        label.config(text=[str(a) + "\n" for a in main])
+        m.append(clicked.get())
+        label.config(text="".join([str(a) + "\n" for a in m]))
 
     def remove():
-        main.remove(clicked.get())
-        label.config(text=[str(a) + "\n" for a in main])
+        m.remove(clicked.get())
+        label.config(text="".join([str(a) + "\n" for a in m]))
 
     Button(root, text="Add to List", command=add).pack()
     Button(root, text="Remove from List", command=remove).pack()
@@ -421,7 +422,7 @@ def option_gui(main, options):
 
     root.mainloop()
 
-    return main
+    return m
 
 
 def check_config():
@@ -463,11 +464,11 @@ def check_config():
             print("")
             print("Investigation Status: " + str(i["settings"]["Investigation Status"]))
             print("")
+        print("-" * 60)
         print("")
         print("Done!")
-        print(
-            "_____________________________________________________________________________"
-        )
+        print("")
+        print("-" * 60)
 
     f = open("config.json", "w")
     json.dump(json.loads(json.dumps(file)), f, indent=4)
