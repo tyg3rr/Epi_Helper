@@ -1,0 +1,29 @@
+---
+reviewers:
+  # The default reviewers
+  defaults:
+    - repository-owners # group
+
+  # Reviewer groups each of which has a list of GitHub usernames
+  groups:
+    repository-owners:
+      - tyg3rr
+    core:
+      - tyg3rr
+    ci:
+      - tyg3rr
+      - h3mmy
+
+files:
+  '**':
+    - repository-owners
+  '.github':
+    - ci
+  'src/**':
+    - core
+  'pyproject.toml':
+    - core
+    - ci
+
+options:
+  ignore_draft: true
