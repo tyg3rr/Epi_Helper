@@ -7,9 +7,9 @@
 Epi_Helper </h>
 </p> 
 
-## Version: 0.1 (Beta)
+## Version: 0.1.0 (Alpha)
 
-Beta Version This pipeline is currently in Alpha testing and issues could appear during data processing, use at your own risk. Feedback and suggestions are welcome!
+Alpha Version This pipeline is currently in Alpha testing and issues could appear during data processing, use at your own risk. Feedback and suggestions are welcome!
 
 ## Overview
 
@@ -24,9 +24,29 @@ The output dataset.csv is optimized for use in PowerBI. Once PowerBI is configur
 
 Epi_helper is designed for 5-year MDSS surveillance reports, and has only been tested on Kent County data. 
 
+## Dependencies
+
+Epi_Helper requires python version 3.9.0 or higher installed in the same working directory as Epi_Helper program files. 
+In addition, the following python modules must be installed:
+
+- pandas
+- datetime
+- json
+- tkinter
+
 ## Installation
 
-- **TODO**
+Starting on the main Epi_Helper GitHub page, click the down arrow on the green "<>Code" button, then click "Download ZIP" Create a new file folder in your working directory for Epi_Helper to live in, then extract all files from the newly downloaded Epi_Helper ZIP into it
+
+To run the script the first time, open PowerShell and type cd FOLDERPATH (<- replace with the folder's working directory). Hit enter then, type cd ./Epi_Helper-main and hit enter next, type the following and then hit enter:
+
+./src/epi_helper/main.py
+
+The script should run - follow its prompts as normal
+
+After the first run of the script, you'll need to edit the PowerBI file
+
+Open FINAL.pbix, then click "Transform Data." In the Power Query editor that opens, click "dataFolderPath" and replace its contents with the working directory of the folder that Epi_Helper lives in (right click the folder and click "copy as path"). Make sure that there are no quotation marks. Click "Close & Apply" Your dashboard should populate with current data
 
 ## License Standard Notice
 

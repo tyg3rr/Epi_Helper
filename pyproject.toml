@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "epi_helper"
 authors = [
-    {name="Lillian Jensen", email="tyg3r@users.noreply.github.com"}
+    {name="Lillian Jensen", email="tyg3rr@users.noreply.github.com"}
 ]
 description = "TODO: Add stuff here"
 readme = "README.md"
 requires-python = ">=3.9"
-keywords = ["data-science", "mdss", "epidemiology"]
+keywords = ["data-science", "michigan-disease-surveillance-system", "epidemiology","local-public-health"]
 license = {file = "LICENSE"}
 classifiers = [
     "Intended Audience :: Science/Research",
