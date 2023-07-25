@@ -36,7 +36,17 @@ In addition, the following python modules must be installed:
 
 ## Installation
 
-- **TODO**
+Starting on the main Epi_Helper GitHub page, click the down arrow on the green "<>Code" button, then click "Download ZIP" Create a new file folder in your working directory for Epi_Helper to live in, then extract all files from the newly downloaded Epi_Helper ZIP into it
+
+To run the script the first time, open PowerShell and type cd FOLDERPATH (<- replace with the folder's working directory). Hit enter then, type cd ./Epi_Helper-main and hit enter next, type the following and then hit enter:
+
+./src/epi_helper/main.py
+
+The script should run - follow its prompts as normal
+
+After the first run of the script, you'll need to edit the PowerBI file
+
+Open FINAL.pbix, then click "Transform Data." In the Power Query editor that opens, click "dataFolderPath" and replace its contents with the working directory of the folder that Epi_Helper lives in (right click the folder and click "copy as path"). Make sure that there are no quotation marks. Click "Close & Apply" Your dashboard should populate with current data
 
 ## License Standard Notice
 
