@@ -90,11 +90,16 @@ def yeet_year_from_name(list):
 
 
 def drop_dates_after_today(df):
-    df = df.set_index(["Disease", "Disease Group"]).T.reset_index()
-    df.iloc[:, 0] = pd.to_datetime(df.iloc[:, 0], format="%b-%Y")
-    df = df.loc[df.iloc[:, 0] < datetime.today(), :].T
-    df.columns = df.iloc[0, :]
-    return df.iloc[1:, :]
+    return df.rename(
+        columns={
+            col: (
+                datetime.strptime(col[5:] + "-1", "%W-%Y-%w")
+                if "MMWR" in col
+                else datetime.strptime(col, "%b-%Y")
+            )
+            for col in df.columns
+        }
+    )
 
 
 def disease_name_handler(df):
@@ -105,6 +110,7 @@ def disease_name_handler(df):
     MDSS does not seem to have a gold-standard for disease renaming, so this function is likely to fail in the future as other diseases are renamed
 
     """
+    df = df.T
     past_measures = get_past_measures_diseases(df.columns)
     current_past_measures = yeet_old_measures_diseases(past_measures)
     df.drop(
@@ -139,16 +145,11 @@ def disease_name_handler(df):
     b = {}
     for col in df.columns:
         b[col] = col.strip("_")
-    return df.rename(columns=b).T.reset_index()
+    return df.rename(columns=b).T.reset_index().set_index(["Disease", "Disease Group"])
 
 
 def data_to_numeric(df):
-    return (
-        df.set_index(["Disease", "Disease Group"])
-        .apply(pd.to_numeric, errors="ignore")
-        .reset_index()
-        .set_index("Disease")
-    )
+    return df.apply(pd.to_numeric, errors="ignore").reset_index().set_index("Disease")
 
 
 def drop_redundant_rows(df):
@@ -157,22 +158,24 @@ def drop_redundant_rows(df):
     These redundant rows are just dates instead of disease counts
     This function removes the redundant rows
     """
-    arbitrary_date = "Jan-" + str(datetime.today().year - 1)
-    return df.drop(df[df[arbitrary_date] == arbitrary_date].index)
+    return df[df[df.columns[2]] != df.columns[2]]
 
 
 def drop_aggregate_data(df):
+    df = df.reset_index()
     for a in ["Total", "Subtotal"]:
         df = df.drop(df[df["Disease"] == a].index)
-    return df.drop(columns="Total")
+    df = df.set_index(["Disease", "Disease Group"])
+    return df.drop(columns=[col for col in df.columns if col == "Total"])
 
 
-def trim_metadata(df):
-    df = df.iloc[9:, :]
-    df.columns = df.iloc[0, :]
-    df = df.iloc[1:, :].set_index("Disease")
-    df.reset_index(inplace=True)
-    return df
+def trim_metadata(dff):
+    dff = dff.iloc[9:, :]
+    dff = dff.rename(columns={col: dff[col].values[0] for col in dff.columns})
+    dff = dff.iloc[1:, :].set_index("Disease")
+    dff = dff.reset_index().set_index(["Disease", "Disease Group"])
+
+    return dff.drop(columns=[col for col in dff.columns if "Total" in col])
 
 
 def to_bool(str):
@@ -203,7 +206,6 @@ def df_cleaning_preprocessing(df):
     df = drop_aggregate_data(df)
     df = drop_redundant_rows(df)
     df = data_to_numeric(df)
-    df = df.T
     df = disease_name_handler(df)
     df = drop_dates_after_today(df)
 
@@ -356,7 +358,7 @@ def prompt_user_for_path(M_DGroup):
     print("B: Click on the 'Reports' tab at the top of the page")
     print("C: Click on '4. Diseases - 5 Year History'")
     print("D: Leave both boxes unckecked in 'Aggregate/Individual Cases'")
-    print("E: Check 'Onset Date' in 'Time Period Based On'")
+    print("E: Check 'Referral Date' in 'Time Period Based On'")
     print("F: Use ctrl-click to select the following 'Case Status' options: ")
     print("")
     print(M_DGroup.case_settings)

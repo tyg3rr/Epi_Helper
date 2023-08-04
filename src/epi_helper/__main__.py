@@ -5,9 +5,7 @@ import json
 from tkinter import *
 from tkinter.ttk import *
 from lilmodmod.module import *
-import pdb
 
-# pdb.set_trace()
 
 pd.set_option("display.max_colwidth", 10000)  # ! Important !
 
@@ -57,4 +55,4 @@ k["YTD Median"] = (
     .reset_index()
     .set_index(["Disease", "Month"])["YTD"]
 )
-k.to_csv("test.csv")
+k.to_csv("out.csv")
