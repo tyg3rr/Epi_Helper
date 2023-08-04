@@ -24,15 +24,9 @@ The output dataset.csv is optimized for use in PowerBI. Once PowerBI is configur
 
 Epi_helper is designed for 5-year MDSS surveillance reports, and has only been tested on Kent County data. 
 
-## Dependencies
+## Guidebook
 
-Epi_Helper requires python version 3.9.0 or higher installed in the same working directory as Epi_Helper program files. 
-In addition, the following python modules must be installed:
-
-- pandas
-- datetime
-- json
-- tkinter
+View the [Epi_Helper Guidebook](www.tyg3r.com/Epi_Helper)
 
 ## Installation
 
