@@ -352,35 +352,31 @@ def prompt_user_for_path(M_DGroup):
     print("")
     print(M_DGroup)
     print("")
-    print("Do the following steps in MDSS: ")
+    print("      Do the following steps in MDSS: ")
     print("")
-    print("    A: Log into MDSS")
-    print("    B: Click on the 'Reports' tab at the top of the page")
-    print("    C: Click on '4. Diseases - 5 Year History'")
-    print("    D: Leave both boxes unckecked in 'Aggregate/Individual Cases'")
-    print("    E: Check 'Referral Date' in 'Time Period Based On'")
-    print("    F: Use ctrl-click to select the following 'Case Status' options: ")
+    print("A: Log into MDSS")
+    print("B: Click on the 'Reports' tab at the top of the page")
+    print("C: Click on '4. Diseases - 5 Year History'")
+    print("D: Leave both boxes unckecked in 'Aggregate/Individual Cases'")
+    print("E: Check 'Referral Date' in 'Time Period Based On'")
+    print("F: Use ctrl-click to select the following 'Case Status' options: ")
     print("")
-    print("** " + str(M_DGroup.case_settings) + " **")
+    print("      " + str(M_DGroup.case_settings))
     print("")
+    print("G: Use ctrl-click to select the following 'Investigation Status' options: ")
+    print("")
+    print("      " + str(M_DGroup.investigation_settings))
+    print("")
+    print("H: In 'Display Interval' check 'By Month'. Choose January through December")
+    print("I: In 'Geographic Area' check 'County' and choose 'Kent'")
     print(
-        "    G: Use ctrl-click to select the following 'Investigation Status' options: "
-    )
-    print("")
-    print("** " + str(M_DGroup.investigation_settings) + " **")
-    print("")
-    print(
-        "    H: In 'Display Interval' check 'By Month'. Choose January through December"
-    )
-    print("    I: In 'Geographic Area' check 'County' and choose 'Kent'")
-    print(
-        "    J: Click 'View CSV Report' to download the report. Wait until the download is finished before proceeding."
+        "J: Click 'View CSV Report' to download the report. Wait until the download is finished before proceeding."
     )
     print(
-        "    K: Nagivate to your computer's downloads folder, where you will find the report you just downloaded."
+        "K: Nagivate to your computer's downloads folder, where you will find the report you just downloaded."
     )
     print(
-        "    L: Click the report once to select it in the folder, then click 'Copy path' in the upper left of the folder"
+        "L: Click the report once to select it in the folder, then click 'Copy path' in the upper left of the folder"
     )
     print("")
     check = False
