@@ -352,7 +352,9 @@ def prompt_user_for_path(M_DGroup):
     print("")
     print(M_DGroup)
     print("")
+    print("-" * 60)
     print("      Do the following steps in MDSS: ")
+    print("-" * 60)
     print("")
     print("A: Log into MDSS")
     print("B: Click on the 'Reports' tab at the top of the page")
@@ -381,7 +383,9 @@ def prompt_user_for_path(M_DGroup):
     print("")
     check = False
     while check == False:
-        file = input("    L: Paste the filepath here: ")
+        print("-" * 60)
+        file = input("Paste the filepath here: ")
+        print("-" * 60)
         df = pd.read_csv(to_raw(file).strip('"'))
 
         if str(find_settings(df)) != str(M_DGroup.get_settings()):
@@ -393,6 +397,7 @@ def prompt_user_for_path(M_DGroup):
             print("")
             print("-" * 60)
             check = True
+    print("You're done!!")
     df = df_cleaning_preprocessing(df)
     return df
 
